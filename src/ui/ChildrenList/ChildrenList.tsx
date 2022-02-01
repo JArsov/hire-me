@@ -1,17 +1,28 @@
 import { Container, Heading, List } from '@chakra-ui/react';
+import { useCallback, useEffect, useState } from 'react';
+import { getChildrenList } from '../../data/api';
 import { Child } from '../../types/models';
 import ChildrenListItem from './ChildrenListItem';
 
-type ChildrenListProps = {
-  data: Child[];
-};
+const ChildrenList = () => {
+  const [children, setChildren] = useState<Child[]>([]);
 
-const ChildrenList = ({ data }: ChildrenListProps) => {
+  const fetchChildrenData = useCallback(async () => {
+    const childrenData = await getChildrenList();
+    if (childrenData) {
+      setChildren(childrenData);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchChildrenData();
+  }, [fetchChildrenData]);
+
   return (
     <Container>
       <Heading>Children List</Heading>
       <List>
-        {data.map(child => (
+        {children?.map(child => (
           <ChildrenListItem key={child.childId} data={child} />
         ))}
       </List>

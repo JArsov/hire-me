@@ -1,7 +1,17 @@
-import axiosImport from "axios";
+import axios from 'axios';
 
-const axios = axiosImport.create({
-  baseURL: process.env.REACT_APP_API_URL
-})
+const client = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+});
 
-export default axios
+/**
+ * Add the 'accessToken' as part of each request to the API
+ */
+client.interceptors.request.use(config => {
+  config.params = config.params || {};
+  config.params['accessToken'] = process.env.REACT_APP_ACCESS_TOKEN;
+
+  return config;
+});
+
+export default client;

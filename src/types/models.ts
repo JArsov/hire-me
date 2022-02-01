@@ -1,6 +1,8 @@
-export type TypeOrNull<T> = T | null
+export type TypeOrNull<T> = T | null;
 
-export type StringOrNull = TypeOrNull<string>
+export type TypeOrUndefined<T> = T | undefined;
+
+export type StringOrNull = TypeOrNull<string>;
 
 export interface Child {
   childId: string;
@@ -22,5 +24,14 @@ export interface Name {
 export interface Image {
   small: string;
   large: string;
-  empty: boolean
+  empty: boolean;
+}
+
+export interface GetChildrenResponse {
+  children: Child[];
+}
+
+export interface GetChildrenParams {
+  groupId: string;
+  institutionId: string;
 }
