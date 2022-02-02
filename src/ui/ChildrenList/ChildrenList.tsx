@@ -1,5 +1,5 @@
 import { Container, Heading, List, Spinner } from '@chakra-ui/react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getChildrenList } from '../../data/api';
 import { Child } from '../../types/models';
@@ -9,15 +9,19 @@ const resultsPerPage = 10;
 
 const ChildrenList = () => {
   const [children, setChildren] = useState<Child[]>([]);
-  const [visibleChildren, setVisibleChildren] = useState<Child[]>([]);
+  const [resultsShown, setResultsShown] = useState(resultsPerPage);
 
   const fetchChildrenData = useCallback(async () => {
     const childrenData = await getChildrenList();
     if (childrenData) {
       setChildren(childrenData);
-      setVisibleChildren(childrenData.slice(0, resultsPerPage));
     }
   }, []);
+
+  const visibleChildren = useMemo(
+    () => children.slice(0, resultsShown),
+    [children, resultsShown],
+  );
 
   useEffect(() => {
     fetchChildrenData();
@@ -26,11 +30,11 @@ const ChildrenList = () => {
   const fetchMoreChildren = useCallback(() => {
     // Adding a timeout in order to mimic an API call
     setTimeout(() => {
-      setVisibleChildren(
-        children.slice(0, visibleChildren.length + resultsPerPage),
+      setResultsShown(results =>
+        Math.min(results + resultsPerPage, children.length),
       );
     }, 1500);
-  }, [children, visibleChildren.length]);
+  }, [children.length]);
 
   return (
     <Container>
@@ -41,9 +45,13 @@ const ChildrenList = () => {
         hasMore={visibleChildren.length < children.length}
         loader={<Spinner />}
       >
-        <List>
+        <List spacing={10} width="98%">
           {visibleChildren?.map(child => (
-            <ChildrenListItem key={child.childId} data={child} />
+            <ChildrenListItem
+              key={child.childId}
+              data={child}
+              refreshList={fetchChildrenData}
+            />
           ))}
         </List>
       </InfiniteScroll>

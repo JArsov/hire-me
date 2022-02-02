@@ -24,6 +24,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off', // No need to always define the return type of a function
     '@typescript-eslint/explicit-module-boundary-types': 'off', // No need to always define the return type of a function
     '@typescript-eslint/no-empty-interface': 'off', // Allows empty interfaces to be defined (might be useful for network)
+    '@typescript-eslint/no-explicit-any': 'off', // Allow for 'any' to be used as a type
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     '@typescript-eslint/no-unused-vars': 'warn', // Self-explanatory

@@ -8,8 +8,16 @@ const client = axios.create({
  * Add the 'accessToken' as part of each request to the API
  */
 client.interceptors.request.use(config => {
-  config.params = config.params || {};
-  config.params['accessToken'] = process.env.REACT_APP_ACCESS_TOKEN;
+  // If 'get' method is used, we include the accessToken as query param
+  if (config.method === 'get') {
+    config.params = config.params || {};
+    config.params['accessToken'] = process.env.REACT_APP_ACCESS_TOKEN;
+  }
+  // Otherwise -> we include it in the request body
+  else {
+    config.data = config.data || {};
+    config.data['accessToken'] = process.env.REACT_APP_ACCESS_TOKEN;
+  }
 
   return config;
 });
