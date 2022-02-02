@@ -34,7 +34,7 @@ const ChildrenListItem = ({
   },
   refreshList,
 }: ChildrenListItemProps) => {
-  const [pickUpTime, setPickUpTime] = useState('10:00');
+  const [pickUpTime, setPickUpTime] = useState(new Date().toLocaleTimeString());
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
