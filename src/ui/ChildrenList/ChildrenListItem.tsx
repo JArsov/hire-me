@@ -48,6 +48,7 @@ const ChildrenListItem = ({
         } else {
           await checkOut(childId);
         }
+        // If the action is successful, show a notification and refresh the children list
         toast({
           position: 'top-right',
           title: `Successful check ${actionLabel} for child ${fullName}`,
@@ -55,7 +56,6 @@ const ChildrenListItem = ({
           duration: 4000,
           isClosable: true,
         });
-        // If the action is successful, refresh the children list
         refreshList();
       } catch (err: any) {
         toast({
@@ -74,9 +74,9 @@ const ChildrenListItem = ({
   );
 
   return (
-    <Flex w="100%" gap="2rem">
+    <Flex width="100%" gap="2rem">
       <Avatar src={smallImage} alt={fullName} />
-      <Flex justifyContent="space-between" w="100%">
+      <Flex justifyContent="space-between" width="100%">
         <Flex flexDirection="column">
           <Heading size="md">{fullName}</Heading>
           <Tooltip label="Date of Birth">

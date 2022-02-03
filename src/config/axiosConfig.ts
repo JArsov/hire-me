@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+/**
+ * Initial setup of the http client
+ */
 const client = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });

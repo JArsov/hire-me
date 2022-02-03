@@ -1,6 +1,9 @@
 import client from '../config/axiosConfig';
 import { GetChildrenParams, GetChildrenResponse } from '../types/models';
 
+/**
+ * Get children handler
+ */
 export const getChildrenList = async () => {
   const url = '/daycare/tablet/group';
   const params: GetChildrenParams = {
@@ -15,6 +18,11 @@ export const getChildrenList = async () => {
   return response.data.children;
 };
 
+/**
+ * Check in handler
+ * @param childId
+ * @param pickupTime
+ */
 export const checkIn = async (childId: string, pickupTime: string) => {
   const url = `v2/children/${childId}/checkins`;
   const data = {
@@ -25,6 +33,10 @@ export const checkIn = async (childId: string, pickupTime: string) => {
   return response.data;
 };
 
+/**
+ * Check out handler
+ * @param childId
+ */
 export const checkOut = async (childId: string) => {
   const url = `v2/children/${childId}/checkout`;
 

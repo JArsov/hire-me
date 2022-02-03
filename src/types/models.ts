@@ -1,3 +1,7 @@
+/**
+ * Only the fields that are being used in the application are defined in the models
+ */
+
 export type TypeOrNull<T> = T | null;
 
 export type TypeOrUndefined<T> = T | undefined;
@@ -10,21 +14,14 @@ export interface Child {
   birthday: StringOrNull;
   image: Image;
   checkedIn: boolean;
-  checkinTime: StringOrNull;
-  pickupTime: StringOrNull;
 }
 
 export interface Name {
-  firstName: string;
   fullName: string;
-  lastName: string;
-  middleName?: string;
 }
 
 export interface Image {
   small: string;
-  large: string;
-  empty: boolean;
 }
 
 export interface GetChildrenResponse {
