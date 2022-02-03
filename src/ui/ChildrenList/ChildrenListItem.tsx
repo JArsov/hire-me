@@ -34,7 +34,7 @@ const ChildrenListItem = ({
   },
   refreshList,
 }: ChildrenListItemProps) => {
-  const [pickUpTime, setPickUpTime] = useState(new Date().toLocaleTimeString());
+  const [pickUpTime, setPickUpTime] = useState(new Date());
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
@@ -44,7 +44,7 @@ const ChildrenListItem = ({
       try {
         setIsLoading(true);
         if (actionType === ActionType.CheckIn) {
-          await checkIn(childId, pickUpTime);
+          await checkIn(childId, pickUpTime.toString());
         } else {
           await checkOut(childId);
         }
@@ -110,16 +110,18 @@ const ChildrenListItem = ({
             <Tag variant="solid" colorScheme="cyan">
               Not Checked In
             </Tag>
-            <Flex>
-              <div>Pick up time:</div>
-              <TimePicker
-                value={pickUpTime}
-                onChange={value => setPickUpTime(value.toString())}
-                minTime={new Date()}
-                disableClock
-                clearIcon={null}
-              />
-            </Flex>
+            <Tooltip label="The pick up time must be in the future">
+              <Flex>
+                <div>Pick up time:</div>
+
+                <TimePicker
+                  value={pickUpTime}
+                  onChange={value => setPickUpTime(value as Date)}
+                  disableClock
+                  clearIcon={null}
+                />
+              </Flex>
+            </Tooltip>
 
             <Button
               size="sm"
